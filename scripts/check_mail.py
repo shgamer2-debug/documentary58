@@ -187,6 +187,19 @@ def main():
     
     mail.logout()
     
+    # Always send test message on manual run
+    try:
+        r = requests.post(f"{BASE_URL}/sendMessage", json={
+            "chat_id": CHAT_ID,
+            "text": "✅ GitHub Actions: проверка почты работает!"
+        }, timeout=15)
+        if r.json().get("ok"):
+            print("✅ Тестовое сообщение отправлено")
+        else:
+            print(f"❌ Ошибка TG: {r.json()}")
+    except Exception as e:
+        print(f"❌ Ошибка соединения: {e}")
+    
     # Process callbacks
     process_callbacks()
     print("\n✅ Готово")
