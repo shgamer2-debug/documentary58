@@ -1,0 +1,26 @@
+name: Проверка почты
+on:
+  schedule:
+    - cron: '10,53 7 * * *'
+    - cron: '0,30 8,9,10,11,12,14,15,16,17 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-mail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Tesseract + dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
+          pip install -q pytesseract pymupdf Pillow python-docx requests
+      - name: Check mail
+        env:
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python scripts/check_mail.py
