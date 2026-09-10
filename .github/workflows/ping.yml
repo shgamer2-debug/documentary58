@@ -1,0 +1,16 @@
+name: ping
+on: workflow_dispatch
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: send
+        env:
+          T: ${{ secrets.TELEGRAM_TOKEN }}
+          C: ${{ secrets.CHAT_ID }}
+        run: |
+          echo "Token: ${#T} chars"
+          echo "Chat: $C"
+          curl -s -X POST "https://api.telegram.org/bot${T}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "{\"chat_id\":\"$C\",\"text\":\"Ping\"}" && echo " OK"
