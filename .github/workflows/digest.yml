@@ -1,4 +1,4 @@
-name: Утренний дайджест
+name: morning-digest
 on:
   schedule:
     - cron: '55 7 * * *'
@@ -16,7 +16,7 @@ jobs:
         run: |
           sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-rus
           pip install -q pytesseract pymupdf Pillow python-docx requests
-      - name: Run digest
+      - name: Run
         env:
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}

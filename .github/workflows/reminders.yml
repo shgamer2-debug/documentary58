@@ -1,8 +1,9 @@
-name: Напоминания
+name: reminders
 on:
   schedule:
     - cron: '20 8,12,15 * * *'
   workflow_dispatch:
+
 jobs:
   remind:
     runs-on: ubuntu-latest
@@ -13,7 +14,7 @@ jobs:
           python-version: '3.11'
       - name: Install deps
         run: pip install -q requests
-      - name: Send reminders
+      - name: Run
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
