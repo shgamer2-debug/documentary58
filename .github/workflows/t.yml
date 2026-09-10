@@ -1,0 +1,13 @@
+name: t
+on: workflow_dispatch
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "token: ${#TG} chars"
+          echo "chat: $CH"
+          curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TG}/sendMessage" -H "Content-Type: application/json" -d "{\"chat_id\":\"$CH\",\"text\":\"t\"}"
+        env:
+          TG: ${{ secrets.TELEGRAM_TOKEN }}
+          CH: ${{ secrets.CHAT_ID }}
